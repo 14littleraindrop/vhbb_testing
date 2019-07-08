@@ -1,0 +1,6 @@
+[submodule "JetSelectionHelper"]
+	path = JetSelectionHelper
+	url = https://gitlab.cern.ch/usatlas-computing-bootcamp/JetSelectionHelper.git
+[submodule "AnalysisPayload"]
+	path = AnalysisPayload
+	url = https://gitlab.cern.ch/usatlas-computing-bootcamp/AnalysisPayload.git
