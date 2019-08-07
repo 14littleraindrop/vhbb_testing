@@ -1,13 +1,13 @@
-# v3 GitModule Submodule JetSelector
+# v5 CMakeModule
 
 This package is intended as what the students are aiming for when performing the 
-reorganization of their code which allows for the use of submodules in Git
+reorganization of their code to use the ATLAS CMake macros.
 
 # Getting the Package
 
 Note that in this case, you should [clone the repository recursively](https://riptutorial.com/git/example/11913/clone-recursively)
 ```
-git clone --recursive https://gitlab.cern.ch/usatlas-computing-bootcamp/v3-gitmodule-submodule-jetselector.git
+git clone --recursive https://gitlab.cern.ch/usatlas-computing-bootcamp/v5-cmakemodule.git
 ```
 (NOTE : The precise repository may not be the same if the user is using their own space.)
 
@@ -22,24 +22,19 @@ which will place the entire file structure within the `/home/atlas/Bootcamp` dir
 of the image.  Go one level above the directory of the repository and create a build directory.
 In this directory, perform the CMake configuration and compilation
 ```
-cd ..
+cd ../v5-cmakemodule
 mkdir build
 cd build
-cmake ../v3-gitmodule-submodule-jetselector
+cmake ../source
 make
 ```
 which will produce a locally executable `AnalysisPayload` again.
 
 # Output
 
-## Basic Kinematic Cuts
+The output file contains histograms with the number of jets and the dijet invariant mass of the two leading jets. Both historams are created for the following selections
 
-This code should produce a pair of histograms that shows the number of jets and the
-dijet invariant mass of the two leading jets among only those jets that pass the 
-selections of pT>50 GeV and |eta|<2.5.
-
-## With B-Tagging
-
-For this, the user will have to implement the `bool JetSelector::isJetBFlavor(const xAOD::Jet* jet)` function.
-Then, they should output the same two histograms (the number of jets and the dijet invariant mass of the two 
-highest pT jets) but only for the subset of jets which have been b-tagged.
+- All jets in the event
+- Jets passing the selection pT>50 GeV and |eta|<2.5
+- All calibrated jets in the event
+- Calibrated jets passing the selection pT>50 GeV and |eta|<2.5
