@@ -13,7 +13,7 @@ git clone --recursive https://gitlab.cern.ch/usatlas-computing-bootcamp/v5-cmake
 
 # Compilation
 
-In either case, the user should start by pulling the ATLAS `AnalysisBase,21.2.75` docker image
+In either case, the user should start by pulling the ATLAS `AnalysisBase:21.2.75` docker image
 and entering into the docker image as below
 ```
 docker run --rm -it -v $PWD:/home/atlas/Bootcamp atlas/analysisbase:21.2.75 bash
