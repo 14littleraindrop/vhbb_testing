@@ -7,6 +7,7 @@ hello world:
     - find . -path ./.git -prune -o -print
 
 build:
+  image: atlas/analysisbase:21.2.85-centos7
   script:
     - mkdir build
     - cd build
