@@ -5,3 +5,10 @@ hello world:
   script:
     - echo "Hello World"
     - find . -path ./.git -prune -o -print
+
+build:
+  script:
+    - mkdir build
+    - cd build
+    - cmake ../source
+    - cmake --build .
