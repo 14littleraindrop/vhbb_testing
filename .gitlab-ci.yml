@@ -15,3 +15,13 @@ build:
     - cd build
     - cmake ../source
     - cmake --build .
+
+build_latest:
+  image: atlas/analysisbase:latest
+  before_script:
+    - source /home/atlas/release_setup.sh
+  script:
+    - mkdir build
+    - cd build
+    - cmake ../source
+    - cmake --build .
