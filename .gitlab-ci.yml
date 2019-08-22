@@ -1,12 +1,18 @@
+stages:
+  - greeting
+  - build
+
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
 
 hello world:
+  stage: greeting
   script:
     - echo "Hello World"
     - find . -path ./.git -prune -o -print
 
 .build_template:
+  stage: build
   before_script:
     - source /home/atlas/release_setup.sh
   script:
