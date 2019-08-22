@@ -47,3 +47,7 @@ run_exotics:
     - mkdir run
     - cd run
     - AnalysisPayload root://eosuser.cern.ch//eos/user/g/gstark/public/DAOD_EXOT27.17882744._000026.pool.root.1 1000
+  artifacts:
+    paths:
+      - run
+    expire_in: 1 week
