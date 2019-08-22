@@ -14,6 +14,10 @@ hello world:
 
 .build_template:
   stage: build
+  artifacts:
+    paths:
+      - build
+    expire_in: 1 day
   before_script:
     - source /home/atlas/release_setup.sh
   script:
@@ -33,6 +37,8 @@ build_latest:
 run_exotics:
   stage: run
   image: atlas/analysisbase:21.2.85-centos7
+  dependencies:
+    - build
   before_script:
     - source /home/atlas/release_setup.sh
     - source build/${AnalysisBase_PLATFORM}/setup.sh
