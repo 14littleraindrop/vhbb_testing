@@ -51,3 +51,12 @@ run_exotics:
     paths:
       - run
     expire_in: 1 week
+
+build_image:
+  stage: build
+  variables:
+    TO: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
+  tags:
+    - docker-image-build
+  script:
+    - ignore
