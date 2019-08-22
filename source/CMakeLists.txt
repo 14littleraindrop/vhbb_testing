@@ -1,7 +1,3 @@
-#
-# Project configuration for UserAnalysis.
-#
-
 # Set the minimum required CMake version:
 cmake_minimum_required( VERSION 3.4 FATAL_ERROR )
 
@@ -34,7 +30,7 @@ find_package( ${ATLAS_PROJECT} REQUIRED )
 # created if the user so chooses.
 atlas_ctest_setup()
 
-# Set up the GitAnalysisTutorial project. With this CMake will look for "packages"
+# With this CMake will look for "packages"
 # in the current repository and all of its submodules, respecting the
 # "package_filters.txt" file, and set up the build of those packages.
 atlas_project( UserAnalysis 1.0.0
