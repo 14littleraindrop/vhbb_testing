@@ -42,6 +42,7 @@ run_exotics:
   before_script:
     - source /home/atlas/release_setup.sh
     - source build/${AnalysisBase_PLATFORM}/setup.sh
+    - echo $SERVICE_PASS | kinit $CERN_USER
   script:
     - mkdir run
     - cd run
