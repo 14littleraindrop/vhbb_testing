@@ -16,21 +16,10 @@ hello world:
     - cmake --build .
 
 build:
+  extends: .build_template
   image: atlas/analysisbase:21.2.85-centos7
-  before_script:
-    - source /home/atlas/release_setup.sh
-  script:
-    - mkdir build
-    - cd build
-    - cmake ../source
-    - cmake --build .
 
 build_latest:
+  extends: .build_template
   image: atlas/analysisbase:latest
-  before_script:
-    - source /home/atlas/release_setup.sh
-  script:
-    - mkdir build
-    - cd build
-    - cmake ../source
-    - cmake --build .
+
