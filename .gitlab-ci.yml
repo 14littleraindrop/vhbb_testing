@@ -45,4 +45,4 @@ run_exotics:
   script:
     - mkdir run
     - cd run
-    - AnalysisPayload
+    - AnalysisPayload root://eosuser.cern.ch//eos/user/g/gstark/public/DAOD_EXOT27.17882744._000026.pool.root.1 1000
