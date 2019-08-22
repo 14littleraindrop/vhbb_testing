@@ -23,6 +23,7 @@ int main() {
   TString inputFilePath = "mc16_13TeV.345055.PowhegPythia8EvtGen_NNPDF3_AZNLO_ZH125J_MINLO_llbb_VpT.deriv.DAOD_EXOT27.e5706_s3126_r10724_p3840/DAOD_EXOT27.17882736._000019.pool.root.1";
   xAOD::TEvent event;
   std::unique_ptr< TFile > iFile ( TFile::Open(inputFilePath, "READ") );
+  if(!iFile) return 1;
   event.readFrom( iFile.get() );
 
   // make our jet selector tool
@@ -39,20 +40,20 @@ int main() {
   JetCalibrationTool_handle.setProperty("IsData"       ,false                                                            );
   JetCalibrationTool_handle.retrieve();
 
-  
+
   // make histograms for storage
   TH1D *h_njets_raw = new TH1D("h_njets_raw","",20,0,20);
   TH1D *h_njets_kin = new TH1D("h_njets_kin","",20,0,20);
-  
+
   TH1D *h_mjj_raw = new TH1D("h_mjj_raw","",100,0,500);
   TH1D *h_mjj_kin = new TH1D("h_mjj_kin","",100,0,500);
 
   TH1D *h_njets_raw_cal = new TH1D("h_njets_raw_cal","",20,0,20);
   TH1D *h_njets_kin_cal = new TH1D("h_njets_kin_cal","",20,0,20);
-  
+
   TH1D *h_mjj_raw_cal = new TH1D("h_mjj_raw_cal","",100,0,500);
   TH1D *h_mjj_kin_cal = new TH1D("h_mjj_kin_cal","",100,0,500);
-  
+
   // for counting events
   unsigned count = 0;
 
@@ -83,7 +84,7 @@ int main() {
     // calibrated
     std::vector<xAOD::Jet> jets_raw_cal;
     std::vector<xAOD::Jet> jets_kin_cal;
-    
+
     // loop through all of the jets and make selections with the helper
     for(const xAOD::Jet* jet : *jets) {
       // print the kinematics of each jet in the event
