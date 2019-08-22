@@ -14,16 +14,24 @@
 // our library functionality
 #include "JetSelectionHelper/JetSelectionHelper.h"
 
-int main() {
+int main(int argc, char** argv) {
 
   // initialize the xAOD EDM
   xAOD::Init();
 
   // open the input file
   TString inputFilePath = "mc16_13TeV.345055.PowhegPythia8EvtGen_NNPDF3_AZNLO_ZH125J_MINLO_llbb_VpT.deriv.DAOD_EXOT27.e5706_s3126_r10724_p3840/DAOD_EXOT27.17882736._000019.pool.root.1";
+  if(argc >= 2) inputFilePath = argv[1];
   xAOD::TEvent event;
   std::unique_ptr< TFile > iFile ( TFile::Open(inputFilePath, "READ") );
+  if(!iFile) return 1;
   event.readFrom( iFile.get() );
+
+  // get the number of events in the file to loop over
+  Long64_t numEntries = -1;
+  if(argc >= 3) numEntries = std::atoi(argv[2]);
+  if(numEntries == -1) numEntries = event.getEntries();
+  std::cout << "Processing " << numEntries << " events" << std::endl;
 
   // make our jet selector tool
   JetSelectionHelper myJetTool;
@@ -39,25 +47,22 @@ int main() {
   JetCalibrationTool_handle.setProperty("IsData"       ,false                                                            );
   JetCalibrationTool_handle.retrieve();
 
-  
+
   // make histograms for storage
   TH1D *h_njets_raw = new TH1D("h_njets_raw","",20,0,20);
   TH1D *h_njets_kin = new TH1D("h_njets_kin","",20,0,20);
-  
+
   TH1D *h_mjj_raw = new TH1D("h_mjj_raw","",100,0,500);
   TH1D *h_mjj_kin = new TH1D("h_mjj_kin","",100,0,500);
 
   TH1D *h_njets_raw_cal = new TH1D("h_njets_raw_cal","",20,0,20);
   TH1D *h_njets_kin_cal = new TH1D("h_njets_kin_cal","",20,0,20);
-  
+
   TH1D *h_mjj_raw_cal = new TH1D("h_mjj_raw_cal","",100,0,500);
   TH1D *h_mjj_kin_cal = new TH1D("h_mjj_kin_cal","",100,0,500);
-  
+
   // for counting events
   unsigned count = 0;
-
-  // get the number of events in the file to loop over
-  const Long64_t numEntries = event.getEntries();
 
   // primary event loop
   for ( Long64_t i=0; i<numEntries; ++i ) {
@@ -83,7 +88,7 @@ int main() {
     // calibrated
     std::vector<xAOD::Jet> jets_raw_cal;
     std::vector<xAOD::Jet> jets_kin_cal;
-    
+
     // loop through all of the jets and make selections with the helper
     for(const xAOD::Jet* jet : *jets) {
       // print the kinematics of each jet in the event

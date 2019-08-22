@@ -1,0 +1,53 @@
+stages:
+  - greeting
+  - build
+  - run
+
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+
+hello world:
+  stage: greeting
+  script:
+    - echo "Hello World"
+    - find . -path ./.git -prune -o -print
+
+.build_template:
+  stage: build
+  artifacts:
+    paths:
+      - build
+    expire_in: 1 day
+  before_script:
+    - source /home/atlas/release_setup.sh
+  script:
+    - mkdir build
+    - cd build
+    - cmake ../source
+    - cmake --build .
+
+build:
+  extends: .build_template
+  image: atlas/analysisbase:21.2.85-centos7
+
+build_latest:
+  extends: .build_template
+  image: atlas/analysisbase:latest
+
+run_exotics:
+  stage: run
+  image: atlas/analysisbase:21.2.85-centos7
+  dependencies:
+    - build
+  before_script:
+    - source /home/atlas/release_setup.sh
+    - source build/${AnalysisBase_PLATFORM}/setup.sh
+    - echo $SERVICE_PASS | kinit $CERN_USER
+  script:
+    - mkdir run
+    - cd run
+    - AnalysisPayload root://eosuser.cern.ch//eos/user/g/gstark/public/DAOD_EXOT27.17882744._000026.pool.root.1 1000
+  artifacts:
+    paths:
+      - run
+    expire_in: 1 week
