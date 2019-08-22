@@ -1,6 +1,7 @@
 stages:
   - greeting
   - build
+  - run
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
@@ -29,3 +30,13 @@ build_latest:
   extends: .build_template
   image: atlas/analysisbase:latest
 
+run_exotics:
+  stage: run
+  image: atlas/analysisbase:21.2.85-centos7
+  before_script:
+    - source /home/atlas/release_setup.sh
+    - source build/${AnalysisBase_PLATFORM}/setup.sh
+  script:
+    - mkdir run
+    - cd run
+    - AnalysisPayload
